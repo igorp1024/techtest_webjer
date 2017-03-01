@@ -90,6 +90,7 @@ public class StateUtils {
   }
 }
 ```
+
 ### Solution demo
 ```bash
 $ cd src 
@@ -129,6 +130,7 @@ should be added so that each line in the return String has at most `maxCharsPerL
 characters. To determine where newlines should be added, try to fit as many words
 as possible on a line (while keeping line length at most `maxCharsPerLine` and
 satisfying the other requirements) before starting a new line.
+
 ### Solution demo
 ```bash
 $ cd src 
