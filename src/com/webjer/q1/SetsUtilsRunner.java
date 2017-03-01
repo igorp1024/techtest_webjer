@@ -59,7 +59,7 @@ public class SetsUtilsRunner {
             }
         );
 
-        performHeavyTest();
+        // performHeavyTest();
     }
 
     private static void performSimpleTest(String[][] sets) {
