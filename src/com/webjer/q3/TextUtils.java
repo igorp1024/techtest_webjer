@@ -70,11 +70,11 @@ public final class TextUtils {
                     //----------------------
                     // We've just added the space char, so this is word boundary. Now it is
                     // necessary to check if this word a non-breakable and should it go on the next
-                    // line or will just fit in the current one.
-                    if (isThisWordNonBreakableAndItWontFitTheCurrentLine(text,
-                                                                         maxCharsPerLine,
-                                                                         seekPos,
-                                                                         curLineCharsCount)) {
+                    // line or will it just fit in the current one.
+                    if (putNonbreakableOnNextLine(text,
+                                                  maxCharsPerLine,
+                                                  seekPos,
+                                                  curLineCharsCount)) {
                         // Start a new line, because there's no space for non-breakable word
                         break;
                     }
@@ -165,26 +165,26 @@ public final class TextUtils {
      * <p>Check if the current word is non-breakable (depends on {@param maxCharsPerLine}) and if
      * the current word fits into current line (depends on {@param maxCharsPerLine} and {@param
      * curLineCharsCount}). Current word is the word starting from {@param seekPos} and consists of
-     * chars which are still unprocessed (look forward is performed to evaluate it's length).
+     * chars which are still unprocessed (look ahead is performed to evaluate it's length).
      *
      * <p>Extracted into a separate method for the readability sake.
      *
      * @return true if current word is non-breakable and it should be broken (won't fit in the
      * string size limit), false otherwise.
      */
-    private static boolean isThisWordNonBreakableAndItWontFitTheCurrentLine(String text,
-                                                                            int maxCharsPerLine,
-                                                                            int seekPos,
-                                                                            int curLineCharsCount) {
-        // It is necessary to look forward for current word length
-        int lookForwardPos = seekPos;
-        while (eolNotReached(text, lookForwardPos) && text.charAt(lookForwardPos) != ' ') {
-            lookForwardPos++;
+    private static boolean putNonbreakableOnNextLine(String text,
+                                                     int maxCharsPerLine,
+                                                     int seekPos,
+                                                     int curLineCharsCount) {
+        // It is necessary to look ahead for current word length
+        int lookAheadPos = seekPos;
+        while (eolNotReached(text, lookAheadPos) && text.charAt(lookAheadPos) != ' ') {
+            lookAheadPos++;
         }
         // If current word can fit into line (it's length is less or equal
         // to maxCharsPerLine), we should start it from new line, otherwise it will
         // be broken
-        int currentWordLength = lookForwardPos - seekPos;
+        int currentWordLength = lookAheadPos - seekPos;
         int symbolsLeftInCurLine = maxCharsPerLine - curLineCharsCount;
         boolean wordIsNonBreakable = currentWordLength <= maxCharsPerLine;
         boolean wordWontFitInTheCurrentLine = symbolsLeftInCurLine < currentWordLength;
